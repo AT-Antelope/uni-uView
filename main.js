@@ -9,8 +9,16 @@ App.mpType = 'app'
 const app = new Vue({
 	...App
 })
+// 引入http拦截器
+require('@/common/http.interceptor.js')(app)
+
+// http接口API集中管理引入部分
+import httpApi from '@/common/http.api.js'
+Vue.use(httpApi, app)
+
 app.$mount()
 // #endif
+
 
 // #ifdef VUE3
 import {
