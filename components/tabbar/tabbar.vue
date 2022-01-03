@@ -1,6 +1,6 @@
 <template>
 	<view class="tabber-wrap">
-		<u-tabbar :value="tabbarIndex" :fixed="false" :placeholder="false" :safeAreaInsetBottom="false">
+		<u-tabbar :value="tabbarIndex" safeAreaInsetBottom border fixed placeholder>
 			<u-tabbar-item text="首页" icon="home" @click="btnTabbar"></u-tabbar-item>
 			<u-tabbar-item text="我的" icon="account" @click="btnTabbar"></u-tabbar-item>
 		</u-tabbar>
@@ -25,8 +25,7 @@ export default {
 
 <style lang="scss" scoped>
 .tabber-wrap {
-	position: fixed;
-	width: 100%;
-	bottom: 0;
+	// width: 100%;
+	// bottom: 0;
 }
 </style>

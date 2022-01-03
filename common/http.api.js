@@ -5,11 +5,33 @@
 // https://uviewui.com/js/http.html#%E4%BD%95%E8%B0%93%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%EF%BC%9F
 const install = (Vue, vm) => {
 	vm.$u.api = {};
-	// 首页
-	vm.$u.api.index = (params = {}) => vm.$u.http.get('/api/index', params);
 
-	// 认证相关的
-	vm.$u.api.authLogin = params => vm.$u.http.get('/api/auth/login', params);
+	/**
+	 * https://www.showdoc.com.cn/1207745568269674/6090131032550241
+	 */
+
+	/**
+	 * get
+	 */
+	// 首页
+	vm.$u.api.index = (params = {}) => vm.$u.http.get('/api/index', {
+		params
+	});
+
+	// 用户信息
+	vm.$u.api.userInfo = params => vm.$u.http.get('/api/user', {
+		params
+	});
+
+	/**
+	 * post
+	 */
+	// 登录
+	vm.$u.api.authLogin = params => vm.$u.http.post('/api/auth/login', {}, {
+		params
+	});
+
+
 }
 
 // // 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下

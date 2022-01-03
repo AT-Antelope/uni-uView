@@ -10,7 +10,7 @@ module.exports = (vm) => {
 
 	// 请求拦截
 	uni.$u.http.interceptors.request.use((config) => { // 可使用async await 做异步操作
-		config.header.authorizationCode = "Bearer " + vm.access_token;
+		config.header.authorizationCode = "Bearer " + vm.vuex_token;
 		// 初始化请求拦截器时，会执行此方法，此时data为undefined，赋予默认{}
 		config.data = config.data || {}
 		// 根据custom参数中配置的是否需要token，添加对应的请求头
@@ -40,11 +40,16 @@ module.exports = (vm) => {
 			vm.$u.toast(data.message)
 			return false;
 		} else if (statusCode == 401) {
-			// 假设401为token失效，跳转登录
-			vm.$u.toast("验证失败，请重新登录")
-			setTimeout(() => {
-				vm.$u.route("@/pages/index/index.vue")
-			}, 1500)
+			// 401的情况有两种，一种是认证未通过，另一种是没有token或已过期
+			if (data.message == "Unauthorized") {
+				vm.$u.toast("账号或密码错误");
+			} else {
+				// 假设401为token失效，跳转登录
+				vm.$u.toast("验证失败，请重新登录")
+				setTimeout(() => {
+					vm.$u.route("@/pages/index/index.vue")
+				}, 1500)
+			}
 			return false;
 		} else if (statusCode == 400) {
 			const {

@@ -7,6 +7,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'uView/index.scss';
+@import '@/uView/index.scss';
 /*每个页面公共css */
 </style>
