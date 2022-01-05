@@ -1,6 +1,7 @@
 <template>
 	<view>
-		
+		personalCenter
+		<c-tabbar></c-tabbar>
 	</view>
 </template>
 

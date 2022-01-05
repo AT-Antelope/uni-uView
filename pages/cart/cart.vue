@@ -1,6 +1,7 @@
 <template>
 	<view>
-		cart
+		Cart
+		<c-tabbar></c-tabbar>
 	</view>
 </template>
 

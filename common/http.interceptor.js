@@ -10,7 +10,7 @@ module.exports = (vm) => {
 
 	// 请求拦截
 	uni.$u.http.interceptors.request.use((config) => { // 可使用async await 做异步操作
-		config.header.authorizationCode = "Bearer " + vm.vuex_token;
+		config.header.Authorization = "Bearer " + vm.$store.state.vuex_token;
 		// 初始化请求拦截器时，会执行此方法，此时data为undefined，赋予默认{}
 		config.data = config.data || {}
 		// 根据custom参数中配置的是否需要token，添加对应的请求头

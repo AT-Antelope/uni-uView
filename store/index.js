@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
+import common from './modules/common.js'
+
 let lifeData = {};
 
 try {
@@ -27,40 +29,42 @@ const saveLifeData = function(key, value) {
 		uni.setStorageSync('lifeData', tmp);
 	}
 }
-const store = new Vuex.Store({
-	// 下面这些值仅为示例，使用过程中请删除
-	state: {
-		// 如果上面从本地获取的lifeData对象下有对应的属性，就赋值给state中对应的变量
-		// 加上vuex_前缀，是防止变量名冲突，也让人一目了然
-		vuex_user: lifeData.vuex_user ? lifeData.vuex_user : {
-			name: '明月'
-		},
-		vuex_token: lifeData.vuex_token ? lifeData.vuex_token : '',
-		// 如果vuex_version无需保存到本地永久存储，无需lifeData.vuex_version方式
-		// vuex_version: '1.0.1',
+const state = {
+	// 如果上面从本地获取的lifeData对象下有对应的属性，就赋值给state中对应的变量
+	// 加上vuex_前缀，是防止变量名冲突，也让人一目了然
+	vuex_user: lifeData.vuex_user ? lifeData.vuex_user : {
+		name: '明月'
 	},
-	mutations: {
-		$uStore(state, payload) {
-			// 判断是否多层级调用，state中为对象存在的情况，诸如user.info.score = 1
-			let nameArr = payload.name.split('.');
-			let saveKey = '';
-			let len = nameArr.length;
-			if (nameArr.length >= 2) {
-				let obj = state[nameArr[0]];
-				for (let i = 1; i < len - 1; i++) {
-					obj = obj[nameArr[i]];
-				}
-				obj[nameArr[len - 1]] = payload.value;
-				saveKey = nameArr[0];
-			} else {
-				// 单层级变量，在state就是一个普通变量的情况
-				state[payload.name] = payload.value;
-				saveKey = payload.name;
+	vuex_token: lifeData.vuex_token ? lifeData.vuex_token : '',
+	// 如果vuex_version无需保存到本地永久存储，无需lifeData.vuex_version方式
+	// vuex_version: '1.0.1',
+}
+const mutations = {
+	$uStore(state, payload) {
+		// 判断是否多层级调用，state中为对象存在的情况，诸如user.info.score = 1
+		let nameArr = payload.name.split('.');
+		let saveKey = '';
+		let len = nameArr.length;
+		if (nameArr.length >= 2) {
+			let obj = state[nameArr[0]];
+			for (let i = 1; i < len - 1; i++) {
+				obj = obj[nameArr[i]];
 			}
-			// 保存变量到本地，见顶部函数定义
-			saveLifeData(saveKey, state[saveKey])
+			obj[nameArr[len - 1]] = payload.value;
+			saveKey = nameArr[0];
+		} else {
+			// 单层级变量，在state就是一个普通变量的情况
+			state[payload.name] = payload.value;
+			saveKey = payload.name;
 		}
+		// 保存变量到本地，见顶部函数定义
+		saveLifeData(saveKey, state[saveKey])
 	}
-})
+}
 
-export default store
+
+export default new Vuex.Store({
+	module: {
+		common
+	},
+})

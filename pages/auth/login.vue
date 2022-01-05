@@ -62,14 +62,17 @@ export default {
 				});
 				return;
 			}
-			// API请求
 			const params = {
 				email: this.email,
 				password: this.passwords
 			};
+			// api请求，登录
 			const loginRes = await this.$u.api.authLogin(params);
 			console.log(loginRes);
 			this.$u.vuex('vuex_token', loginRes.data.access_token);
+			// api请求，获取用户信息
+			const userInfo = await this.$u.api.userInfo();
+			console.log()
 		}
 	}
 };

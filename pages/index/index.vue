@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<!-- 轮播图 -->
-		<view><u-swiper :list="slides" keyName="img_url" height="320rpx" circular indicator autoplay></u-swiper></view>
+		<!-- 轮播图,autoplay -->
+		<view><u-swiper :list="slides" keyName="img_url" height="320rpx" circular indicator></u-swiper></view>
 		<!-- 标签页，筛选方式 -->
 		<view class="tabs-wrap"><u-tabs :list="listSort" :current="indexSort" @change="changeSort" sticky lineWidth="50" :activeStyle="{ color: '#3c9cff' }"></u-tabs></view>
 		<view>
@@ -63,7 +63,7 @@ export default {
 			/**
 			 * 其他组件
 			 */
-			flagLoading: 0
+			flagLoading: false
 		};
 	},
 	// es7, 同步
@@ -97,7 +97,7 @@ export default {
 			if (this.indexSort == 3) params.new = 1;
 
 			// 启用加载中组件
-			this.flagLoading = 1;
+			this.flagLoading = true;
 			// 请求接口获取数据
 			const res = await this.$u.api.index(params);
 			// vue是虚拟Dom，没有发生改变时，不会进行重新渲染，不用担心每次请求浪费资源
@@ -105,7 +105,7 @@ export default {
 			// this.goods.push(...res.data.goods.data);	// on my way
 			this.goods = [...this.goods, ...res.data.goods.data];
 			// 更新加载中组件状态
-			this.flagLoading = 0;
+			this.flagLoading = false;
 		}
 	},
 	// 触底

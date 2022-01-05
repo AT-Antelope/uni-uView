@@ -2,7 +2,7 @@ import App from './App'
 
 // #ifndef VUE3
 import Vue from 'vue'
-import store from '@/store';
+import store from '@/store/index';
 import uView from '@/uView'
 Vue.use(uView)
 Vue.config.productionTip = false

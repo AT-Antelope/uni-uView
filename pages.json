@@ -9,31 +9,35 @@
 			"style": {
 				"navigationBarTitleText": "首页"
 			}
-		}, {
+		},
+		{
+			"path": "pages/goods/goods",
+			"style": {
+				"navigationBarTitleText": "商品",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/cart/cart",
+			"style": {
+				"navigationBarTitleText": "购物车",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
 			"path": "pages/personalCenter/personalCenter",
 			"style": {
 				"navigationBarTitleText": "个人中心",
 				"enablePullDownRefresh": false
 			}
 
-		}, {
-			"path": "pages/goods/goods",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/cart/cart",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
+		},
+		{
 			"path": "pages/auth/login",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "登录",
 				"enablePullDownRefresh": false
 			}
 
