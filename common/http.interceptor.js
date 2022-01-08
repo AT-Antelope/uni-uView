@@ -42,13 +42,15 @@ module.exports = (vm) => {
 		} else if (statusCode == 401) {
 			// 401的情况有两种，一种是认证未通过，另一种是没有token或已过期
 			if (data.message == "Unauthorized") {
-				vm.$u.toast("账号或密码错误");
+				vm.toast("账号或密码错误");
 			} else {
-				// 假设401为token失效，跳转登录
-				vm.$u.toast("验证失败，请重新登录")
-				setTimeout(() => {
-					vm.$u.route("@/pages/index/index.vue")
-				}, 1500)
+				// 假设401为token失效，或请求了需要登录的API，跳转登录
+				vm.toast("验证失败，请重新登录")
+				// setTimeout(() => {
+				// 	vm.$u.route("@/pages/index/index.vue")
+				// }, 1500)
+				// 现采用自定义全局方法代替
+				vm.$u.utils.isLogin();
 			}
 			return false;
 		} else if (statusCode == 400) {

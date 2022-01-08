@@ -18,6 +18,10 @@ require('@/common/http.interceptor.js')(app)
 import httpApi from '@/common/http.api.js'
 Vue.use(httpApi, app)
 
+// 自定义工具类，utils
+import utils from "@/common/utils"
+Vue.use(utils, app)
+
 let vuexStore = require("@/store/$u.mixin.js");
 Vue.mixin(vuexStore);
 

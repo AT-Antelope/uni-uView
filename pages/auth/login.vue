@@ -68,11 +68,19 @@ export default {
 			};
 			// api请求，登录
 			const loginRes = await this.$u.api.authLogin(params);
-			console.log(loginRes);
 			this.$u.vuex('vuex_token', loginRes.data.access_token);
+			this.$u.toast('登录成功');
 			// api请求，获取用户信息
 			const userInfo = await this.$u.api.userInfo();
-			console.log()
+			this.$u.vuex('vuex_userInfo', userInfo);
+			// 登录后，跳转到来源页
+			const backUrl = uni.getStorageSync('back_url') || 'pages/index/index';
+			setTimeout(() => {
+				this.$u.route({
+					type: 'reLaunch',
+					url: backUrl
+				});
+			}, 1500);
 		}
 	}
 };

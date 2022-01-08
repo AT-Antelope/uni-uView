@@ -42,42 +42,39 @@ export default {
 	},
 	methods: {
 		changeTabbar(e) {
-			uni.setStorageSync('tabbarIndex', e);
 			this.tabbarIndex = e;
+			// 储存当前激活状态
+			uni.setStorage('tabbarIndex', e);
 			this.redirectTabber(e);
 		},
+		// 转到对应路由，根据当前激活状态
 		redirectTabber(tabbarIndex) {
 			if (tabbarIndex == 0) {
-				uni.redirectTo({
+				uni.$u.route({
+					type: 'redirect',
 					url: '/pages/index/index'
-					// success: res => {},
-					// fail: () => {},
-					// complete: () => {}
 				});
 			} else if (tabbarIndex == 1) {
-				uni.redirectTo({
+				uni.$u.route({
+					type: 'redirect',
 					url: '/pages/goods/goods'
-					// success: res => {},
-					// fail: () => {},
-					// complete: () => {}
 				});
 			} else if (tabbarIndex == 2) {
-				uni.redirectTo({
+				uni.$u.route({
+					type: 'redirect',
 					url: '/pages/cart/cart'
-					// success: res => {},
-					// fail: () => {},
-					// complete: () => {}
 				});
 			} else if (tabbarIndex == 3) {
-				uni.redirectTo({
+				uni.$u.route({
+					type: 'redirect',
 					url: '/pages/personalCenter/personalCenter'
-					// success: res => {},
-					// fail: () => {},
-					// complete: () => {}
 				});
 			}
 		}
 	},
+	/**
+	 * 组件生命周期
+	 */
 	created() {
 		// TODO 刷新后当前值不会回到首页
 		// 实时更新最后选中值，每次到新页面加载底部导航栏时，获取vuex中的tabbarIndex
