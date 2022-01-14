@@ -41,6 +41,14 @@
 				"enablePullDownRefresh": false
 			}
 
+		},
+		{
+			"path": "pages/auth/register",
+			"style": {
+				"navigationBarTitleText": "注册",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	],
 	"globalStyle": {

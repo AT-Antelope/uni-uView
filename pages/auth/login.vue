@@ -21,7 +21,7 @@
 		<view class="agreenment">
 			<navigator url="forget" open-type="navigate">忘记密码</navigator>
 			<text>|</text>
-			<navigator url="reg" open-type="navigate">注册账户</navigator>
+			<navigator url="./register" open-type="navigate">注册账户</navigator>
 		</view>
 		<!-- 消息提示 -->
 		<u-toast ref="uToast"></u-toast>

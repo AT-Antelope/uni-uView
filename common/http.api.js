@@ -30,7 +30,10 @@ const install = (Vue, vm) => {
 	vm.$u.api.authLogin = params => vm.$u.http.post('/api/auth/login', {}, {
 		params
 	});
-
+	// 注册，非小程序注册， 请不要使用openid参数， 否则会导致验证不通过
+	vm.$u.api.authRegister = params => vm.$u.http.POST('/api/auth/register', {}, {
+		params
+	});
 
 }
 
