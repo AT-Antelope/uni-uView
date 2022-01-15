@@ -8,7 +8,7 @@
 		<view class="list">
 			<view class="list-call">
 				<image class="img" src="/static/shilu-login/1.png"></image>
-				<input class="sl-input" v-model="email" type="string" maxlength="32" placeholder="输入手机号" />
+				<input class="sl-input" v-model="email" type="string" maxlength="32" placeholder="输入邮箱" />
 			</view>
 			<view class="list-call">
 				<image class="img" src="/static/shilu-login/2.png"></image>
