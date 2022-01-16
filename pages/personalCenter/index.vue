@@ -21,8 +21,8 @@
 		</view>
 
 		<view class="u-m-t-20">
-			<u-cell-group class="bg-white"><u-cell icon="setting" title="个人信息" isLink></u-cell></u-cell-group>
-		</view>
+			<u-cell-group class="bg-white"><u-cell icon="setting" title="个人信息" url="/pages/auth/personalInfo" isLink></u-cell></u-cell-group>
+		</view> 
 
 		<view class="u-m-t-20">
 			<u-cell-group class="bg-white">

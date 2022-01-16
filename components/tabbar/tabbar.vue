@@ -57,17 +57,17 @@ export default {
 			} else if (tabbarIndex == 1) {
 				uni.$u.route({
 					type: 'redirect',
-					url: '/pages/goods/goods'
+					url: '/pages/goods/index'
 				});
 			} else if (tabbarIndex == 2) {
 				uni.$u.route({
 					type: 'redirect',
-					url: '/pages/cart/cart'
+					url: '/pages/cart/index'
 				});
 			} else if (tabbarIndex == 3) {
 				uni.$u.route({
 					type: 'redirect',
-					url: '/pages/personalCenter/personalCenter'
+					url: '/pages/personalCenter/index'
 				});
 			}
 		}

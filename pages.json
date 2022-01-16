@@ -11,7 +11,7 @@
 			}
 		},
 		{
-			"path": "pages/goods/goods",
+			"path": "pages/goods/index",
 			"style": {
 				"navigationBarTitleText": "商品",
 				"enablePullDownRefresh": false
@@ -19,7 +19,7 @@
 
 		},
 		{
-			"path": "pages/cart/cart",
+			"path": "pages/cart/index",
 			"style": {
 				"navigationBarTitleText": "购物车",
 				"enablePullDownRefresh": false
@@ -27,7 +27,7 @@
 
 		},
 		{
-			"path": "pages/personalCenter/personalCenter",
+			"path": "pages/personalCenter/index",
 			"style": {
 				"navigationBarTitleText": "个人中心",
 				"enablePullDownRefresh": false
@@ -50,7 +50,16 @@
 			}
 
 		}
-	],
+	    ,{
+            "path" : "pages/auth/personalInfo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "个人信息",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "图书商城",
