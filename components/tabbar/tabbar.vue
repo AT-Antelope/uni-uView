@@ -43,8 +43,8 @@ export default {
 	methods: {
 		changeTabbar(e) {
 			this.tabbarIndex = e;
-			// 储存当前激活状态
-			uni.setStorage('tabbarIndex', e);
+			// 储存当前激活状态，使用vuex，刷新后自动清空，回到默认值0
+			this.$u.vuex('tabbarIndex', e);
 			this.redirectTabber(e);
 		},
 		// 转到对应路由，根据当前激活状态
@@ -72,13 +72,14 @@ export default {
 			}
 		}
 	},
+	computed: {},
 	/**
 	 * 组件生命周期
 	 */
 	created() {
 		// TODO 刷新后当前值不会回到首页
 		// 实时更新最后选中值，每次到新页面加载底部导航栏时，获取vuex中的tabbarIndex
-		this.tabbarIndex = uni.getStorageSync('tabbarIndex') || 0;
+		this.tabbarIndex = this.$store.state.tabbarIndex || 0;
 	}
 };
 </script>

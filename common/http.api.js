@@ -16,8 +16,6 @@ const install = (Vue, vm) => {
 	// get
 	vm.$u.api.index = (params = {}) => vm.$u.http.get('/api/index', params);
 
-
-
 	/**
 	 * 登录
 	 */
@@ -26,13 +24,18 @@ const install = (Vue, vm) => {
 	/**
 	 * 注册，非小程序注册， 请不要使用openid参数， 否则会导致验证不通过
 	 */
-	vm.$u.api.authRegister = params => vm.$u.http.POST('/api/auth/register', params);
+	vm.$u.api.authRegister = params => vm.$u.http.post('/api/auth/register', params);
+
+	/**
+	 * 退出登录
+	 */
+	vm.$u.api.authLogout = () => vm.$u.http.post('/api/auth/logout');
 
 	/**
 	 * 用户信息
 	 */
 	// 获取用户信息
-	vm.$u.api.userInfo = params => vm.$u.http.get('/api/user', params);
+	vm.$u.api.userInfo = () => vm.$u.http.get('/api/user');
 	// 修改用户信息
 	vm.$u.api.userInfoUpdate = params => vm.$u.http.put('/api/user', params);
 

@@ -37,6 +37,12 @@ export default {
 					// 刷新用户信息，更新vuex_	user
 					this.$u.utils.updateUser();
 					this.$u.toast('更新成功');
+					setTimeout(() => {
+						this.$u.route({
+							type: 'redirectTo',
+							url: '/pages/personalCenter/index'
+						});
+					}, 1500);
 				})
 				.catch(err => {
 					this.$u.toast('更新失败\r' + err);

@@ -22,7 +22,7 @@
 
 		<view class="u-m-t-20">
 			<u-cell-group class="bg-white"><u-cell icon="setting" title="个人信息" url="/pages/auth/personalInfo" isLink></u-cell></u-cell-group>
-		</view> 
+		</view>
 
 		<view class="u-m-t-20">
 			<u-cell-group class="bg-white">
@@ -33,7 +33,7 @@
 		</view>
 
 		<view class="u-m-t-20">
-			<u-cell-group class="bg-white"><u-cell icon="info-circle" title="退出登录" isLink></u-cell></u-cell-group>
+			<u-cell-group class="bg-white"><u-cell icon="info-circle" title="退出登录" isLink @click="btnLogout"></u-cell></u-cell-group>
 		</view>
 		<!-- 底部导航栏 -->
 		<c-tabbar></c-tabbar>
@@ -47,7 +47,28 @@ export default {
 			pic: 'https://uviewui.com/common/logo.png'
 		};
 	},
-	methods: {},
+	methods: {
+		// 退出登录
+		async btnLogout() {
+			//请求api，退出登录
+			await this.$u.api.authLogout();
+
+			this.$u.toast('退出成功');
+
+			// 延时清除，否则当前页的个人数据在转到首页前就被清除
+			setTimeout(() => {
+				// 清除缓存的用户信息和token
+				this.$u.vuex('vuex_token', null);
+				this.$u.vuex('vuex_userInfo', {});
+
+				// 跳转到首页
+				this.$u.route({
+					type: 'reLaunch',
+					url: '/pages/index/index'
+				});
+			}, 1500);
+		}
+	},
 	onLoad() {
 		// 未登录时中断
 		if (this.$u.utils.isLogin()) return;
@@ -55,17 +76,17 @@ export default {
 	computed: {
 		// 头像url
 		userAvtarUrl() {
-			if (!this.$store.state.vuex_userInfo) return 'https://uviewui.com/common/logo.png';
+			if (!this.$store.state.vuex_userInfo.length > 0) return 'https://uviewui.com/common/logo.png';
 			return this.$store.state.vuex_userInfo.data.avatar_url;
 		},
 		// 头像url
 		userName() {
-			if (!this.$store.state.vuex_userInfo) return '未登录';
+			if (!this.$store.state.vuex_userInfo.length > 0) return '点击登录';
 			return this.$store.state.vuex_userInfo.data.name;
 		},
 		// 头像url
 		userEmail() {
-			if (!this.$store.state.vuex_userInfo) return '';
+			if (!this.$store.state.vuex_userInfo.length > 0) return '';
 			return `微信号: ${this.$store.state.vuex_userInfo.data.email}`;
 		}
 	}

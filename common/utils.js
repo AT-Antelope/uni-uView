@@ -38,11 +38,16 @@ const install = (Vue, vm) => {
 		// 已登录
 		return true;
 	};
+
+	/**
+	 * 更新用户信息，更新vuex_user
+	 * TODO 更新后页面未更新
+	 */
 	const updateUser = async () => {
 		// 请求用户信息
 		const userInfo = await vm.$u.api.userInfo();
 		// 缓存用户信息
-		vm.$u.vuex('vuex_user', userInfo);
+		vm.$u.vuex('vuex_userInfo', userInfo);
 	}
 
 
