@@ -68,10 +68,11 @@ module.exports = (vm) => {
 	})
 
 	vm.$u.patch = (url, params = {}, header = {}) => {
+		// 原应使用PATCH请求，报错"patch method is not supported for this route. supported methods: POST"，暂采用post代替
 		const _params = {
 			...params,
-			_method: "PATCH"
+			_method: "POST"
 		}
-		return vm.$u.post(url, _params, header)
+		return vm.$u.http.post(url, _params, header)
 	}
 }

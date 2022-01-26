@@ -7,16 +7,7 @@
 		<view>
 			<!-- 分栏布局，商品 -->
 			<u-row justify="space-between" gutter="12" class="flex-wrap">
-				<u-col span="5.6" v-for="(item, index) in goods" :key="index" class="goods-col">
-					<navigator class="goods-item">
-						<u-image width="100%" height="300rpx" :src="item.cover_url"></u-image>
-						<view class="title u-line-1">{{ item.title }}</view>
-						<view class="card-flex">
-							<view class="price">￥{{ item.price }}</view>
-							<view class="sales ">销量: {{ item.sales }}</view>
-						</view>
-					</navigator>
-				</u-col>
+				<u-col span="5.6" v-for="(item, index) in goods" :key="index" class="goods-col"><c-goods-card :goods="item"></c-goods-card></u-col>
 			</u-row>
 			<!-- 加载页 -->
 			<u-loading-page :loading="flagLoading" color="white" loading-mode="spinner" loadingColor="white" bgColor="rgba(179,179,179,.5)"></u-loading-page>

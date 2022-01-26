@@ -1,6 +1,10 @@
 <script>
 export default {
-	onLaunch: function() {},
+	onLaunch: async function() {
+		// TODO 刷新页面vuex丢失，导致个人信息储存失效，Cannot read property 'commit' of undefined
+		// console.log(this.$store.commit);
+		// this.$u.utils.updateUser();
+	},
 	onShow: function() {},
 	onHide: function() {}
 };

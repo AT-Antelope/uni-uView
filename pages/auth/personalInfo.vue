@@ -1,5 +1,6 @@
 <template>
 	<view class="outter-wrap">
+		<view class="avatarUploader"><c-upload></c-upload></view>
 		<!-- 注意，如果需要兼容微信小程序，最好通过setRules方法设置rules规则 -->
 		<u--form labelPosition="left" :model="form" :rules="rules" ref="uForm">
 			<u-form-item label="姓名" prop="name" ref="item1" borderBottom required><u--input v-model="form.name" border="none"></u--input></u-form-item>
@@ -53,12 +54,16 @@ export default {
 		// 设置规则，onload里可能还未创建完毕
 		this.$refs.uForm.setRules(this.rules);
 		// 默认显示原昵称
-		this.form.name = this.$store.state.vuex_userInfo.data.name;
+		this.form.name = this.$store.state.vuex_userInfo.data ? this.$store.state.vuex_userInfo.data.name : '未登录';
 	}
 };
 </script>
 
 <style lang="scss" scoped>
+.avatarUploader {
+	// margin-left: 50%;
+	// transform: translateX(-15%);
+}
 .outter-wrap {
 	margin: 0 40rpx;
 }

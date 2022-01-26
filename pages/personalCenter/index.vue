@@ -16,7 +16,7 @@
 			<!-- <view class="u-m-l-10 u-p-10"></view> -->
 			<view class="my-flex flex-grow-1 u-m-l-10 u-p-10">
 				<u-icon name="scan" color="#969799" size="28"></u-icon>
-				<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
+				<!-- <u-icon name="arrow-right" color="#969799" size="28"></u-icon> -->
 			</view>
 		</view>
 
@@ -52,7 +52,6 @@ export default {
 		async btnLogout() {
 			//请求api，退出登录
 			await this.$u.api.authLogout();
-
 			this.$u.toast('退出成功');
 
 			// 延时清除，否则当前页的个人数据在转到首页前就被清除
@@ -60,6 +59,8 @@ export default {
 				// 清除缓存的用户信息和token
 				this.$u.vuex('vuex_token', null);
 				this.$u.vuex('vuex_userInfo', {});
+				// 更新底部导航栏激活值
+				this.$u.vuex('tabbarIndex', 0);
 
 				// 跳转到首页
 				this.$u.route({
@@ -76,17 +77,17 @@ export default {
 	computed: {
 		// 头像url
 		userAvtarUrl() {
-			if (!this.$store.state.vuex_userInfo.length > 0) return 'https://uviewui.com/common/logo.png';
+			if (!this.$store.state.vuex_userInfo.data) return 'https://uviewui.com/common/logo.png';
 			return this.$store.state.vuex_userInfo.data.avatar_url;
 		},
 		// 头像url
 		userName() {
-			if (!this.$store.state.vuex_userInfo.length > 0) return '点击登录';
+			if (!this.$store.state.vuex_userInfo.data) return '点击登录';
 			return this.$store.state.vuex_userInfo.data.name;
 		},
 		// 头像url
 		userEmail() {
-			if (!this.$store.state.vuex_userInfo.length > 0) return '';
+			if (!this.$store.state.vuex_userInfo.data) return '';
 			return `微信号: ${this.$store.state.vuex_userInfo.data.email}`;
 		}
 	}

@@ -7,6 +7,7 @@ const install = (Vue, vm) => {
 	vm.$u.api = {};
 
 	/**
+	 * api document
 	 * https://www.showdoc.com.cn/1207745568269674/6090131032550241
 	 */
 
@@ -39,6 +40,13 @@ const install = (Vue, vm) => {
 	// 修改用户信息
 	vm.$u.api.userInfoUpdate = params => vm.$u.http.put('/api/user', params);
 
+	/**
+	 * 阿里云，文件上传
+	 */
+	// 获取oss token
+	vm.$u.api.getOssToken = () => vm.$u.http.get('/api/auth/oss/token');
+	// 更新头像，原应使用patch，但uview不自带，自定义patch方法请求报错，现用post也同样成功请求
+	vm.$u.api.avatarUpdate = params => vm.$u.patch('/api/user/avatar', params);
 }
 
 // // 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下

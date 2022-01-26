@@ -41,7 +41,6 @@ const install = (Vue, vm) => {
 
 	/**
 	 * 更新用户信息，更新vuex_user
-	 * TODO 更新后页面未更新
 	 */
 	const updateUser = async () => {
 		// 请求用户信息
