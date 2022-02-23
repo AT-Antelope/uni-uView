@@ -47,6 +47,12 @@ const install = (Vue, vm) => {
 	vm.$u.api.getOssToken = () => vm.$u.http.get('/api/auth/oss/token');
 	// 更新头像，原应使用patch，但uview不自带，自定义patch方法请求报错，现用post也同样成功请求
 	vm.$u.api.avatarUpdate = params => vm.$u.patch('/api/user/avatar', params);
+
+	/**
+	 * 商品详情
+	 */
+	vm.$u.api.goodsInfo = id => vm.$u.http.get(`/api/goods/${id}`)
+
 }
 
 // // 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
