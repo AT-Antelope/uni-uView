@@ -63,9 +63,15 @@
 		<!-- 底部按钮栏 -->
 		<view class="naviagtion" style="position:fixed;bottom:0;width:100%;display:flex;justify-content: space-around;">
 			<view class="left">
-				<view class="item">
-					<u-icon name="star" :size="30" :color="$u.color['contentColor']"></u-icon>
-					<view class="text u-line-1">收藏</view>
+				<view class="item" @click="clcGoodsCollect">
+					<block v-if="isCollect">
+						<u-icon name="star" :size="30" color="red"></u-icon>
+						<view class="text u-line-1">已收藏</view>
+					</block>
+					<block v-else>
+						<u-icon name="star" :size="30" :color="$u.color['contentColor']"></u-icon>
+						<view class="text u-line-1">收藏</view>
+					</block>
 				</view>
 				<view class="item car">
 					<u-badge class="car-num" type="error" :value="0" max="99" :offset="[-3, -6]"></u-badge>
@@ -103,7 +109,8 @@ export default {
 			goodsInfo: {},
 			commentList: [],
 			likeGoodsList: [],
-			goodsCurrentID: null
+			goodsCurrentID: null,
+			isCollect: false
 		};
 	},
 	methods: {
@@ -113,6 +120,7 @@ export default {
 			this.commentList = res.data.goods.comments; // 评论列表
 			this.list[1].badge.value = res.data.goods.comments.length; // 标签栏角标
 			this.likeGoodsList = res.data.like_goods; // 推荐商品
+			this.isCollect = res.data.goods.is_collect ? true : false; // 收藏状态
 		},
 		change(res) {
 			this.current = res.index;
@@ -123,15 +131,31 @@ export default {
 				url: '/pages/template/comment/reply'
 			});
 		},
-		// 点赞
-		getLike(index) {
-			this.commentList[index].isLike = !this.commentList[index].isLike;
-			if (this.commentList[index].isLike == true) {
-				this.commentList[index].likeNum++;
-			} else {
-				this.commentList[index].likeNum--;
-			}
+		// 收藏按钮
+		async clcGoodsCollect() {
+			let res = await this.$u.api.goodsCollect(this.goodsCurrentID);
+			console.log(res);
+			res.statusCode == 201
+				? (() => {
+						this.isCollect = 1;
+						this.$u.toast('收藏成功');
+				  })()
+				: (() => {
+						this.isCollect = 0;
+						this.$u.toast('取消成功');
+				  })();
 		}
+
+		// 点赞
+		// getLike(index) {
+		// 	this.commentList[index].isLike = !this.commentList[index].isLike;
+		// 	if (this.commentList[index].isLike == true) {
+		// 		this.commentList[index].likeNum++;
+		// 	} else {
+		// 		this.commentList[index].likeNum--;
+		// 	}
+		// }
+
 		// 评论列表
 		// 	getComment() {
 		// 		this.commentList = [
