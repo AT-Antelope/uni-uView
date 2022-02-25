@@ -19,38 +19,45 @@
 
 		<!-- 评论区 -->
 		<view v-if="current == 1">
-			<view class="comment" v-for="(res, index) in commentList" :key="res.id">
-				<view class="left"><image :src="res.user.avatar_url" mode="aspectFill"></image></view>
-				<view class="right">
-					<view class="top">
-						<view class="name">{{ res.user.name }}</view>
-						<view class="like" :class="{ highlight: res.isLike }">
-							<!-- 点赞功能，暂无 -->
-							<!-- <view class="num">{{ res.likeNum }}</view> -->
-							<u-icon v-if="!res.isLike" name="thumb-up" :size="30" color="#9a9a9a" @click="getLike(index)"></u-icon>
-							<u-icon v-if="res.isLike" name="thumb-up-fill" :size="30" @click="getLike(index)"></u-icon>
+			<!-- 有评论 -->
+			<block v-if="hasComment">
+				<view class="comment" v-for="(res, index) in commentList" :key="res.id">
+					<view class="left"><image :src="res.user.avatar_url" mode="aspectFill"></image></view>
+					<view class="right">
+						<view class="top">
+							<view class="name">{{ res.user.name }}</view>
+							<view class="like" :class="{ highlight: res.isLike }">
+								<!-- 点赞功能，暂无 -->
+								<!-- <view class="num">{{ res.likeNum }}</view> -->
+								<u-icon v-if="!res.isLike" name="thumb-up" :size="30" color="#9a9a9a" @click="getLike(index)"></u-icon>
+								<u-icon v-if="res.isLike" name="thumb-up-fill" :size="30" @click="getLike(index)"></u-icon>
+							</view>
 						</view>
-					</view>
-					<view class="content">{{ res.content }}</view>
-					<!-- 回复功能，暂无 -->
-					<!-- <view class="reply-box">
-						<view class="item" v-for="(item, index) in res.replyList" :key="item.index">
-							<view class="username">{{ item.name }}</view>
-							<view class="text">{{ item.contentStr }}</view>
-						</view>
-						<view class="all-reply" @tap="toAllReply" v-if="res.replyList != undefined">
-							共{{ res.allReply }}条回复
-							<u-icon class="more" name="arrow-right" :size="26"></u-icon>
-						</view>
-					</view> -->
+						<view class="content">{{ res.content }}</view>
+						<!-- 回复功能，暂无 -->
+						<!-- <view class="reply-box">
+							<view class="item" v-for="(item, index) in res.replyList" :key="item.index">
+								<view class="username">{{ item.name }}</view>
+								<view class="text">{{ item.contentStr }}</view>
+							</view>
+							<view class="all-reply" @tap="toAllReply" v-if="res.replyList != undefined">
+								共{{ res.allReply }}条回复
+								<u-icon class="more" name="arrow-right" :size="26"></u-icon>
+							</view>
+						</view> -->
 
-					<!-- 评论日期 -->
-					<view class="bottom">
-						{{ res.created_at }}
-						<view class="reply">回复</view>
+						<!-- 评论日期 -->
+						<view class="bottom">
+							{{ res.created_at }}
+							<view class="reply">回复</view>
+						</view>
 					</view>
 				</view>
-			</view>
+			</block>
+			<block v-else>
+				<!-- 无评论 -->
+				<u--text class="commentEmpty" text="—— 暂无评论 ——" size="18" align="center" lineHeight="150" color="grey"></u--text>
+			</block>
 		</view>
 
 		<!-- 推荐商品 -->
@@ -84,6 +91,7 @@
 				<view class="buy btn u-line-1">立即购买</view>
 			</view>
 		</view>
+		<u-loading-page :loading="flagLoading" color="white" loading-mode="spinner" loadingColor="white" bgColor="rgba(179,179,179,.5)"></u-loading-page>
 	</view>
 </template>
 
@@ -105,12 +113,14 @@ export default {
 					name: '推荐商品'
 				}
 			],
-			current: 0,
-			goodsInfo: {},
-			commentList: [],
-			likeGoodsList: [],
-			goodsCurrentID: null,
-			isCollect: false
+			current: 0,	// 当前商品ID
+			goodsInfo: {},	// 当前商品信息
+			commentList: [],	// 评论列表
+			hasComment: false,	// 有评论状态
+			likeGoodsList: [],	// 相关推荐列表
+			goodsCurrentID: null,	// 当前商品ID
+			isCollect: false,	// 已收藏状态
+			flagLoading: true	// 页面加载中状态
 		};
 	},
 	methods: {
@@ -118,9 +128,11 @@ export default {
 			const res = await this.$u.api.goodsInfo(this.goodsCurrentID);
 			this.goodsInfo = res.data.goods; // 商品详情
 			this.commentList = res.data.goods.comments; // 评论列表
+			this.commentList.length > 0 ? (this.hasComment = true) : (this.hasComment = false); // 是否显示"暂无评论"
 			this.list[1].badge.value = res.data.goods.comments.length; // 标签栏角标
 			this.likeGoodsList = res.data.like_goods; // 推荐商品
 			this.isCollect = res.data.goods.is_collect ? true : false; // 收藏状态
+			this.flagLoading = false;	// 取消加载中状态
 		},
 		change(res) {
 			this.current = res.index;
