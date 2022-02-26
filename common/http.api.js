@@ -18,18 +18,13 @@ const install = (Vue, vm) => {
 	vm.$u.api.index = (params = {}) => vm.$u.http.get('/api/index', params);
 
 	/**
-	 * 登录
+	 * 账户操作
 	 */
+	// 登录
 	vm.$u.api.authLogin = params => vm.$u.http.post('/api/auth/login', params);
-
-	/**
-	 * 注册，非小程序注册， 请不要使用openid参数， 否则会导致验证不通过
-	 */
+	// 注册，非小程序注册， 请不要使用openid参数， 否则会导致验证不通过
 	vm.$u.api.authRegister = params => vm.$u.http.post('/api/auth/register', params);
-
-	/**
-	 * 退出登录
-	 */
+	// 退出登录
 	vm.$u.api.authLogout = () => vm.$u.http.post('/api/auth/logout');
 
 	/**
@@ -49,14 +44,19 @@ const install = (Vue, vm) => {
 	vm.$u.api.avatarUpdate = params => vm.$u.patch('/api/user/avatar', params);
 
 	/**
-	 * 商品详情
+	 * 商品
 	 */
+	// 商品详情
 	vm.$u.api.goodsInfo = id => vm.$u.http.get(`/api/goods/${id}`);
+	// 商品收藏和取消
+	vm.$u.api.goodsCollect = id => vm.$u.http.post(`/api/collects/goods/${id}`);
 
 	/**
-	 * 商品收藏和取消
+	 * 购物车
 	 */
-	vm.$u.api.goodsCollect = id => vm.$u.http.post(`/api/collects/goods/${id}`);
+	// 添加购物车
+	vm.$u.api.cartAdd = params => vm.$u.http.post('/api/carts', params);
+	vm.$u.api.cartList = params => vm.$u.http.get('/api/carts');
 
 }
 

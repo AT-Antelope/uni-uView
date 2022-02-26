@@ -81,13 +81,13 @@
 					</block>
 				</view>
 				<view class="item car">
-					<u-badge class="car-num" type="error" :value="0" max="99" :offset="[-3, -6]"></u-badge>
+					<u-badge class="car-num" type="error" :value="cartCount" max="99" :offset="[-3, -6]"></u-badge>
 					<u-icon name="shopping-cart" :size="30" :color="$u.color['contentColor']"></u-icon>
 					<view class="text u-line-1">购物车</view>
 				</view>
 			</view>
 			<view class="right">
-				<view class="cart btn u-line-1">加入购物车</view>
+				<view class="cart btn u-line-1" @click="addCart">加入购物车</view>
 				<view class="buy btn u-line-1">立即购买</view>
 			</view>
 		</view>
@@ -113,14 +113,15 @@ export default {
 					name: '推荐商品'
 				}
 			],
-			current: 0,	// 当前商品ID
-			goodsInfo: {},	// 当前商品信息
-			commentList: [],	// 评论列表
-			hasComment: false,	// 有评论状态
-			likeGoodsList: [],	// 相关推荐列表
-			goodsCurrentID: null,	// 当前商品ID
-			isCollect: false,	// 已收藏状态
-			flagLoading: true	// 页面加载中状态
+			current: 0, // 当前tab页索引
+			goodsInfo: {}, // 当前商品信息
+			commentList: [], // 评论列表
+			hasComment: false, // 有评论状态
+			likeGoodsList: [], // 相关推荐列表
+			goodsCurrentID: null, // 当前商品ID
+			isCollect: false, // 已收藏状态
+			flagLoading: true, // 页面加载中状态
+			cartCount: 0
 		};
 	},
 	methods: {
@@ -132,7 +133,7 @@ export default {
 			this.list[1].badge.value = res.data.goods.comments.length; // 标签栏角标
 			this.likeGoodsList = res.data.like_goods; // 推荐商品
 			this.isCollect = res.data.goods.is_collect ? true : false; // 收藏状态
-			this.flagLoading = false;	// 取消加载中状态
+			this.flagLoading = false; // 取消加载中状态
 		},
 		change(res) {
 			this.current = res.index;
@@ -156,6 +157,20 @@ export default {
 						this.isCollect = 0;
 						this.$u.toast('取消成功');
 				  })();
+		},
+		// 加入购物车
+		async addCart() {
+			const params = { goods_id: this.goodsCurrentID };
+			await this.$u.api.cartAdd(params);
+			this.$u.toast('添加成功');
+			this.getCartCount();
+		},
+		// 购物车数量
+		async getCartCount() {
+			if (this.$u.utils.isLogin()) {
+				const res = await this.$u.api.cartList();
+				this.cartCount = res.data.data.length;
+			}
 		}
 
 		// 点赞
@@ -240,7 +255,8 @@ export default {
 		this.goodsCurrentID = options.id;
 
 		// this.getComment();
-		this.getData();
+		this.getData(); // 商品数据
+		this.getCartCount(); // 购物车数量
 	}
 };
 </script>
