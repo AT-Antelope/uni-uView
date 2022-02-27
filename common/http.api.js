@@ -50,6 +50,8 @@ const install = (Vue, vm) => {
 	vm.$u.api.goodsInfo = id => vm.$u.http.get(`/api/goods/${id}`);
 	// 商品收藏和取消
 	vm.$u.api.goodsCollect = id => vm.$u.http.post(`/api/collects/goods/${id}`);
+	// 商品列表
+	vm.$u.api.goodsList = params => vm.$u.http.get('/api/goods', params);
 
 	/**
 	 * 购物车

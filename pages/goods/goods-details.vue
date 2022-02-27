@@ -167,7 +167,9 @@ export default {
 		},
 		// 购物车数量
 		async getCartCount() {
-			if (this.$u.utils.isLogin()) {
+			// 判断是否登录，直接使用utils里的判断登录会导致多余操作，未登录时会跳转至登录页
+			const token = vm.$store.state.vuex_token;
+			if (token) {
 				const res = await this.$u.api.cartList();
 				this.cartCount = res.data.data.length;
 			}
