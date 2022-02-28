@@ -1,17 +1,28 @@
 <template>
 	<view class="u-wrap">
 		<view class="u-search-box">
-			<view class="u-search-inner">
-				<u-icon name="search" color="#909399" :size="28"></u-icon>
-				<text class="u-search-text">搜索</text>
+			<!-- <view class="u-search-inner"> -->
+			<view>
+				<!-- <u-icon name="search" color="#909399" :size="28"></u-icon> -->
+				<!-- <text class="u-search-text">搜索</text> -->
+				<u-search
+					placeholder="请输入关键字"
+					v-model="searchKeyword"
+					:clearabled="true"
+					:show-action="true"
+					actionText="搜索"
+					@search="searchGoods"
+					@custom="searchGoods"
+					@clear="clearSearchGoods"
+				></u-search>
 			</view>
 		</view>
 		<view class="u-menu-wrap">
 			<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop" :scroll-into-view="itemId">
-				<block v-for="(item, index) in categories" :key="index">
+				<block v-for="(item, index) in categories" :key="item.id">
 					<view
 						v-for="(itemInner, indexInner) in item.children"
-						:key="indexInner"
+						:key="itemInner.id"
 						class="u-tab-item"
 						:class="[current == index + '-' + indexInner ? 'u-tab-item-active' : '']"
 						@tap.stop="swichMenu(index + '-' + indexInner)"
@@ -57,7 +68,9 @@ export default {
 			menuItemPos: [],
 			arr: [],
 			scrollRightTop: 0, // 右边栏目scroll-view的滚动条高度
-			timer: null // 定时器
+			timer: null, // 定时器
+			searchKeyword: '', // 搜索栏关键字
+			page: 1 // 当前页码
 		};
 	},
 	onLoad() {
@@ -68,9 +81,24 @@ export default {
 	},
 	methods: {
 		async getData() {
-			const res = await this.$u.api.goodsList({ page: this.current });
+			const params = {
+				page: this.page,
+				title: this.searchKeyword
+			};
+			const res = await this.$u.api.goodsList(params);
 			this.categories = res.data.categories;
 			this.goodsList = res.data.goods.data;
+		},
+		// 搜索商品
+		searchGoods() {
+			this.page = 1;
+			this.getData();
+		},
+		// 清空搜索商品，恢复默认商品列表
+		clearSearchGoods() {
+			this.page = 1;
+			this.searchKeyword = '';
+			this.getData();
 		},
 		getImage() {
 			return Math.floor(Math.random() * 35);

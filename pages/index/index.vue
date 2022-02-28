@@ -124,11 +124,11 @@ export default {
  * 分栏布局
  */
 .flex-wrap {
-	flex-wrap: wrap;
+	flex-wrap: wrap; // 允许换行
 }
 .goods-col {
 	/* 使用u-line-1，解决title过长导致下面的所有商品卡片，水平不在对齐 */
-	/* 临时，不知道为什么u-line-1会导致width变宽，把col的width降到47%就不会发生 */
+	/* 临时，不知道为什么u-line-1会导致width变宽，部分商品封面尺寸更大导致一行只能显示一个商品，把col的width降到47%就不会发生 */
 	width: 47%;
 }
 .goods-item {

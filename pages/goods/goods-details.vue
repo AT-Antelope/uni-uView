@@ -62,8 +62,8 @@
 
 		<!-- 推荐商品 -->
 		<view class="u-p-b-80" v-if="current == 2">
-			<u-row gutter="12">
-				<u-col v-for="(goods, index) in likeGoodsList" span="5.6" :key="index"><c-goods-card :goods="goods"></c-goods-card></u-col>
+			<u-row gutter="12" class="flex-wrap">
+				<u-col v-for="(goods, index) in likeGoodsList" span="5.6" :key="index" class="goods-col"><c-goods-card :goods="goods"></c-goods-card></u-col>
 			</u-row>
 		</view>
 
@@ -168,7 +168,7 @@ export default {
 		// 购物车数量
 		async getCartCount() {
 			// 判断是否登录，直接使用utils里的判断登录会导致多余操作，未登录时会跳转至登录页
-			const token = vm.$store.state.vuex_token;
+			const token = this.$store.state.vuex_token;
 			if (token) {
 				const res = await this.$u.api.cartList();
 				this.cartCount = res.data.data.length;
@@ -365,6 +365,14 @@ export default {
 			}
 		}
 	}
+}
+.flex-wrap {
+	flex-wrap: wrap; // 允许换行
+}
+.goods-col {
+	/* 使用u-line-1，解决title过长导致下面的所有商品卡片，水平不在对齐 */
+	/* 临时，不知道为什么u-line-1会导致width变宽，部分商品封面尺寸更大导致一行只能显示一个商品，把col的width降到47%就不会发生 */
+	width: 47%;
 }
 .naviagtion {
 	display: flex;
