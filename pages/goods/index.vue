@@ -1,5 +1,6 @@
 <template>
 	<view class="u-wrap">
+		<!-- 搜索框 -->
 		<view class="u-search-box">
 			<!-- <view class="u-search-inner"> -->
 			<view>
@@ -17,21 +18,23 @@
 				></u-search>
 			</view>
 		</view>
+		<!-- 左侧分类栏 -->
 		<view class="u-menu-wrap">
 			<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop" :scroll-into-view="itemId">
 				<block v-for="(item, index) in categories" :key="item.id">
 					<view
-						v-for="(itemInner, indexInner) in item.children"
+						v-for="itemInner in item.children"
 						:key="itemInner.id"
 						class="u-tab-item"
-						:class="[current == index + '-' + indexInner ? 'u-tab-item-active' : '']"
-						@tap.stop="swichMenu(index + '-' + indexInner)"
+						:class="[current == itemInner.id ? 'u-tab-item-active' : '']"
+						@tap.stop="swichMenu(itemInner.id)"
 					>
 						<text class="u-line-1">{{ itemInner.name }}</text>
 					</view>
 				</block>
 			</scroll-view>
-			<scroll-view :scroll-top="scrollRightTop" scroll-y scroll-with-animation class="right-box" @scroll="rightScroll">
+			<!-- 商品列表 -->
+			<scroll-view :scroll-top="scrollRightTop" scroll-y scroll-with-animation class="right-box" @scroll="rightScroll" @scrolltolower="scrollBottom">
 				<view class="page-view">
 					<!-- <view class="class-item" :id="'item' + index" v-for="(item, index) in tabbar" :key="index"> -->
 					<view class="class-item">
@@ -70,7 +73,8 @@ export default {
 			scrollRightTop: 0, // 右边栏目scroll-view的滚动条高度
 			timer: null, // 定时器
 			searchKeyword: '', // 搜索栏关键字
-			page: 1 // 当前页码
+			page: 1, // 当前页码
+			isLastPage: false // 是否是最后一页
 		};
 	},
 	onLoad() {
@@ -85,19 +89,25 @@ export default {
 				page: this.page,
 				title: this.searchKeyword
 			};
+			if (this.current) params.category_id = this.current;
+
 			const res = await this.$u.api.goodsList(params);
 			this.categories = res.data.categories;
-			this.goodsList = res.data.goods.data;
+			this.goodsList = [...this.goodsList, ...res.data.goods.data]; // 触底事件(原+新)
+			console.log(res);
+			this.isLastPage = res.data.goods.next_page_url ? false : true; //判断是否是最后一页
 		},
 		// 搜索商品
 		searchGoods() {
 			this.page = 1;
+			this.goodsList = []; // 清空商品列表
 			this.getData();
 		},
 		// 清空搜索商品，恢复默认商品列表
 		clearSearchGoods() {
 			this.page = 1;
 			this.searchKeyword = '';
+			this.goodsList = []; // 清空商品列表
 			this.getData();
 		},
 		getImage() {
@@ -114,6 +124,8 @@ export default {
 				this.scrollRightTop = this.arr[index];
 				this.current = index;
 				this.leftMenuStatus(index);
+				console.log(index);
+				this.getData();
 			});
 		},
 		// 获取一个目标元素的高度
@@ -218,6 +230,12 @@ export default {
 					}
 				}
 			}, 10);
+		},
+		// 触底事件
+		scrollBottom(e) {
+			if (this.isLastPage) return;
+			this.page = this.page + 1;
+			this.getData();
 		}
 	}
 };
