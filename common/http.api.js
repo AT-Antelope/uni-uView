@@ -9,6 +9,8 @@ const install = (Vue, vm) => {
 	/**
 	 * api document
 	 * https://www.showdoc.com.cn/1207745568269674/6090131032550241
+	 * 
+	 * 由于uView的封装方式，get带参数时，为get(url,config)，config中的值写为get(url,{params})
 	 */
 
 	/**
@@ -51,7 +53,9 @@ const install = (Vue, vm) => {
 	// 商品收藏和取消
 	vm.$u.api.goodsCollect = id => vm.$u.http.post(`/api/collects/goods/${id}`);
 	// 商品列表
-	vm.$u.api.goodsList = params => vm.$u.http.get('/api/goods', params);
+	vm.$u.api.goodsList = params => vm.$u.http.get('/api/goods', {
+		params
+	});
 
 	/**
 	 * 购物车

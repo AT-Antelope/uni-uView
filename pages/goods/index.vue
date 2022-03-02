@@ -63,7 +63,7 @@ export default {
 			goodsList: [],
 			scrollTop: 0, //tab标题的滚动条位置
 			oldScrollTop: 0,
-			current: '0-0', // 预设当前项的值，用于传class的名称进scroll-view组件里，改成item-itemInner后的字符串形式
+			current: '0', // 预设当前项的值，用于传class的名称进scroll-view组件里，改成item-itemInner后的字符串形式
 			menuHeight: 0, // 左边菜单的高度
 			menuItemHeight: 0, // 左边菜单item的高度
 			itemId: '', // 栏目右边scroll-view用于滚动的id
@@ -86,15 +86,14 @@ export default {
 	methods: {
 		async getData() {
 			const params = {
-				page: this.page,
-				title: this.searchKeyword
+				page: this.page
 			};
+			if (this.params) params = this.searchKeyword;
 			if (this.current) params.category_id = this.current;
 
 			const res = await this.$u.api.goodsList(params);
 			this.categories = res.data.categories;
 			this.goodsList = [...this.goodsList, ...res.data.goods.data]; // 触底事件(原+新)
-			console.log(res);
 			this.isLastPage = res.data.goods.next_page_url ? false : true; //判断是否是最后一页
 		},
 		// 搜索商品
@@ -123,8 +122,8 @@ export default {
 			this.$nextTick(function() {
 				this.scrollRightTop = this.arr[index];
 				this.current = index;
-				this.leftMenuStatus(index);
-				console.log(index);
+				// this.leftMenuStatus(index);
+				this.goodsList = [];
 				this.getData();
 			});
 		},
