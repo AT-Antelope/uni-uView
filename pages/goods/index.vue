@@ -88,7 +88,7 @@ export default {
 			const params = {
 				page: this.page
 			};
-			if (this.params) params = this.searchKeyword;
+			if (this.searchKeyword) params.title = this.searchKeyword;
 			if (this.current) params.category_id = this.current;
 
 			const res = await this.$u.api.goodsList(params);
@@ -100,6 +100,7 @@ export default {
 		searchGoods() {
 			this.page = 1;
 			this.goodsList = []; // 清空商品列表
+			this.current = 0;
 			this.getData();
 		},
 		// 清空搜索商品，恢复默认商品列表
@@ -124,6 +125,7 @@ export default {
 				this.current = index;
 				// this.leftMenuStatus(index);
 				this.goodsList = [];
+				this.searchKeyword = '';
 				this.getData();
 			});
 		},
