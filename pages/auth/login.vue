@@ -75,9 +75,10 @@ export default {
 			this.$u.vuex('vuex_userInfo', userInfo);
 			// 登录后，跳转到来源页
 			const backUrl = uni.getStorageSync('back_url') || 'pages/index/index';
+			// TODO 刷新页面时失去页面栈不能回到上一个页面，添加判断，如果是底部tabbar，用switchTab；如果普通普通页面，用redirectTo
 			setTimeout(() => {
 				this.$u.route({
-					type: 'reLaunch',
+					type: 'reLaunch', // 使用reLaunch在app上会不显示左上角返回按钮，导致无法返回首页
 					url: backUrl
 				});
 			}, 1500);

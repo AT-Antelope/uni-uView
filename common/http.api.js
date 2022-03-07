@@ -62,7 +62,11 @@ const install = (Vue, vm) => {
 	 */
 	// 添加购物车
 	vm.$u.api.cartAdd = params => vm.$u.http.post('/api/carts', params);
-	vm.$u.api.cartList = params => vm.$u.http.get('/api/carts');
+	// 购物车列表
+	vm.$u.api.cartList = params => vm.$u.http.get('/api/carts', {
+		params
+	});
+
 
 }
 

@@ -26,6 +26,10 @@ export default {
 			// 当设置 mutiple(多选) 为 true 时, file 为数组格式，否则为对象格式
 			// 储存文件路径
 			_this.avatarFileList[0] = event;
+			/**
+			 * H5:		file.name
+			 * 小程序:	file.path
+			 */
 			// 储存即将上传的文件名，guid()，uView封装的唯一标识符
 			_this.avatarNameGuid = `${this.avatarFileList[0].name}_${uni.$u.guid(20)}.jpg`;
 

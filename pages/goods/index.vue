@@ -21,7 +21,8 @@
 		<!-- 左侧分类栏 -->
 		<view class="u-menu-wrap">
 			<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop" :scroll-into-view="itemId">
-				<block v-for="(item, index) in categories" :key="item.id">
+				<!-- ios对block的支持不太好，所以block循环改为view -->
+				<view v-for="(item, index) in categories" :key="item.id">
 					<view
 						v-for="itemInner in item.children"
 						:key="itemInner.id"
@@ -31,7 +32,7 @@
 					>
 						<text class="u-line-1">{{ itemInner.name }}</text>
 					</view>
-				</block>
+				</view>
 			</scroll-view>
 			<!-- 商品列表 -->
 			<scroll-view :scroll-top="scrollRightTop" scroll-y scroll-with-animation class="right-box" @scroll="rightScroll" @scrolltolower="scrollBottom">
@@ -51,6 +52,7 @@
 				</view>
 			</scroll-view>
 		</view>
+		<!-- 底部导航栏 -->
 		<c-tabbar></c-tabbar>
 	</view>
 </template>
