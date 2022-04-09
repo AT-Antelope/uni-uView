@@ -1,74 +1,70 @@
 {
-	"easycom": {
-		"^u-(.*)": "@/uView/components/u-$1/u-$1.vue",
-		"^c-(.*)": "@/components/$1/$1.vue"
-	},
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "首页"
-			}
-		},
-		{
-			"path": "pages/goods/index",
-			"style": {
-				"navigationBarTitleText": "商品",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
-			"path": "pages/cart/index",
-			"style": {
-				"navigationBarTitleText": "购物车",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
-			"path": "pages/personalCenter/index",
-			"style": {
-				"navigationBarTitleText": "个人中心",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
-			"path": "pages/auth/login",
-			"style": {
-				"navigationBarTitleText": "登录",
-				"enablePullDownRefresh": false
-			}
-
-		},
-		{
-			"path": "pages/auth/register",
-			"style": {
-				"navigationBarTitleText": "注册",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/auth/personalInfo",
-			"style": {
-				"navigationBarTitleText": "个人信息",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/goods/goods-details",
-			"style": {
-				"navigationBarTitleText": "商品详情",
-				"enablePullDownRefresh": false
-			}
-
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "图书商城",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
-	}
+  "easycom": {
+    "^u-(.*)": "@/uView/components/u-$1/u-$1.vue",
+    "^c-(.*)": "@/components/$1/$1.vue"
+  },
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "pages/goods/index",
+      "style": {
+        "navigationBarTitleText": "商品",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/cart/index",
+      "style": {
+        "navigationBarTitleText": "购物车",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/personalCenter/index",
+      "style": {
+        "navigationBarTitleText": "个人中心",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/auth/login",
+      "style": {
+        "navigationBarTitleText": "登录",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/auth/register",
+      "style": {
+        "navigationBarTitleText": "注册",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/auth/personalInfo",
+      "style": {
+        "navigationBarTitleText": "个人信息",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/goods/goods-details",
+      "style": {
+        "navigationBarTitleText": "商品详情",
+        "enablePullDownRefresh": false
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "图书商城",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  }
 }

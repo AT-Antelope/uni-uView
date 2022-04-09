@@ -33,7 +33,8 @@ export default {
 			email: '',
 			passwords: '',
 			password_confirmation: '',
-			pic: 'https://uviewui.com/common/logo.png'
+			pic: 'https://uviewui.com/common/logo.png',
+			showPassword: false
 		};
 	},
 	methods: {
@@ -49,7 +50,7 @@ export default {
 				password_confirmation: this.password_confirmation
 			};
 			// 3.请求API，执行注册
-			const res = this.$u.api.authRegister(params);
+			const res = await this.$u.api.authRegister(params);
 			// 4.注册成功后，重定向到登录页(redirect)
 			console.log(params);
 		}
